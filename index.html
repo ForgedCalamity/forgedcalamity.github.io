@@ -1,92 +1,405 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <meta charset="utf-8">
-    <meta name=viewport content="width=device-width, initial-scale=1">
-    <!--[if lt IE 9]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forged Calamity: Benchmark for Cross-Domain Synthetic Disaster Detection</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
-        body { margin: 0; padding: 0; }
-        html { height: 100%; cursor: default; }
-        body {
-            font-family: "Roboto", sans-serif; /* Default font */
-            width: 100%; height: 100%;
-            text-align: center;
-            display: table;
-            opacity: 1;
-            animation: fadein 3s forwards;
-        }
-        h2 {
-            font-weight: 300;
-            margin-bottom: 25px;
-        }
-        img {
-            width: 25%; /* Image width */
-            border: 0; /* For IE */
-            /* Aspect ratio of image, gives initial dimension to prevent text moving down once image is loaded */
-            /* When changing logo, change this also */
-            aspect-ratio: 125 / 50;
-        }
-        #main {
-            vertical-align: middle;
-            display: table-cell;
-        }
-        /* Progress bar */
-        #progress {
-            width: 45%; /* Bar width */
-            margin: 0 auto;
-            border-radius: 10px; /* Roundness */
-            background-color: #a8a8a8; /* Background colour */
-            padding: 7px 5px;
-            /* border: 5px solid #a8a8a8; Border */
-        }
-        #fill {
-            padding: 2px 0;
-            background-color: #00b98b; /* Fill colour */
-            width: 35%; /* Bar percentage, change text below also */
-            border-radius: 25px; /* Roundness */
-            animation: proanimate 2s;
-        }
-        #barpercent h3 {
-            color: white; /* Bar percentage text colour */
-            margin: 0; padding: 0;
-            opacity: 1;
-            animation: fadein 3s forwards;
-        }
-
-        /* Fades in animation */
-        @keyframes fadein  {
-            from { opacity: 0; }
-        }
-        /* Animates bar on page load */
-        @keyframes proanimate {
-            from { width: 0%; }
-        }
-
-        @media screen and (max-width:600px) {
-            img {
-                width: 60%;
-            }
-            h1 {
-                font-size: 1.3em;
-            }
-            h2 {
-                margin: 1.1em;
-                font-size: 1.1em;
-            }
-            #progress {
-                width: 80%; /* Bar width */
-            }
-        }
+        body { font-family: 'Inter', sans-serif; }
+        .author-link:hover { color: #2563EB; text-decoration: underline; }
+        .bibtex-box { background-color: #f3f4f6; border-radius: 8px; padding: 16px; font-family: monospace; font-size: 0.85rem; overflow-x: auto; white-space: pre; border: 1px solid #e5e7eb; }
+        .teaser-img { width: 100%; border-radius: 8px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); }
+        .table-header { @apply px-4 py-2 text-center font-semibold border-b bg-gray-100 text-gray-900; }
+        .table-cell { @apply px-4 py-2 text-center border-b text-gray-700; }
+        .best-score { @apply font-bold text-red-600; }
+        .second-score { @apply font-semibold text-blue-600 underline; }
+        .third-score { @apply italic text-green-700; }
     </style>
-    <title>Coming Soon</title>
 </head>
-<body>
-    <div id="main">
-        <img src="logo.png" alt="Logo Image">
-        <h1>Forged Calamity Project</h1>
-        <h2>Our website is currently under construction. </h2>
-        <div id="progress"><div id="fill"><div id="barpercent"><h3>35%</h3></div></div></div>
+<body class="bg-white text-gray-800 antialiased">
+
+    <div class="max-w-5xl mx-auto px-4 py-12 sm:px-6 lg:px-8">
+        
+        <div class="text-center mb-12">
+            <h1 class="text-3xl sm:text-4xl font-bold text-gray-900 mb-6 tracking-tight">
+                Forged Calamity: Benchmark for Cross-Domain Synthetic Disaster Detection in the Age of Diffusion
+            </h1>
+            
+            <div class="text-lg mb-6 flex flex-wrap justify-center gap-x-4 gap-y-2">
+                <span class="font-medium">Duc-Manh Phan<sup>1,2*</sup></span>
+                <span class="font-medium">Quoc-Duy Tran<sup>1,2*</sup></span>
+                <span class="font-medium">Duy-Khang Do<sup>1,2*</sup></span>
+                <span class="font-medium">Anh-Tuan Vo<sup>1,2</sup></span>
+                <span class="font-medium">Hai-Dang Nguyen<sup>1,2</sup></span>
+                <br class="hidden sm:block">
+                <span class="font-medium">Trong Le Do<sup>1,2</sup></span>
+                <span class="font-medium">Mai-Khiem Tran<sup>1,2</sup></span>
+                <span class="font-medium">Vinh-Tiep Nguyen<sup>2,3</sup></span>
+                <span class="font-medium">Tam V. Nguyen<sup>4</sup></span>
+                <span class="font-medium">Isao Echizen<sup>5</sup></span>
+                <span class="font-medium">Minh-Triet Tran<sup>1,2</sup></span>
+                <span class="font-medium">Trung-Nghia Le<sup>1,2†</sup></span>
+            </div>
+
+            <div class="text-sm text-gray-600 mb-6 space-y-1">
+                <p><sup>1</sup> University of Science, VNU-HCM, Vietnam &nbsp;&bull;&nbsp; <sup>2</sup> Vietnam National University, Ho Chi Minh, Vietnam</p>
+                <p><sup>3</sup> University of Information Technology, VNU-HCM, Vietnam &nbsp;&bull;&nbsp; <sup>4</sup> University of Dayton, USA &nbsp;&bull;&nbsp; <sup>5</sup> National Institute of Informatics, Japan</p>
+                <p class="text-xs mt-2 italic">* Equal contribution &nbsp;&nbsp; † Corresponding author</p>
+            </div>
+
+            <div class="flex justify-center gap-4 mt-8">
+                <a href="#" class="flex items-center gap-2 bg-gray-400 cursor-not-allowed text-white px-5 py-2 rounded-full transition shadow-lg" title="Paper not yet available">
+                    <i class="fa-solid fa-file-pdf"></i>
+                    <span>Paper</span>
+                </a>
+                <a href="#" class="flex items-center gap-2 bg-gray-400 cursor-not-allowed text-white px-5 py-2 rounded-full transition shadow-lg" title="Paper not yet available">
+                    <i class="fa-solid fa-file-pdf"></i>
+                    <span>Code</span>
+                </a>
+                <a href="#" class="flex items-center gap-2 bg-gray-400 cursor-not-allowed text-white px-5 py-2 rounded-full transition shadow-lg" title="Paper not yet available">
+                    <i class="fa-solid fa-file-pdf"></i>
+                    <span>Data</span>
+                </a>
+            </div>
+        </div>
+
+        <div class="mb-12">
+            <figure class="text-center">
+                <img src="images/disaster_source_demo.jpg" alt="Real Disaster Examples" class="teaser-img mb-2" onerror="this.onerror=null; this.src='https://via.placeholder.com/800x400?text=Real+Disaster+Examples';">
+                <figcaption class="text-sm text-gray-500 italic">
+                    Figure 1: Representative examples of natural disaster categories from the Incident-1M dataset (Real images).
+                </figcaption>
+            </figure>
+        </div>
+
+        <div class="mb-16">
+            <h2 class="text-2xl font-bold text-gray-900 mb-4 border-b pb-2">Abstract</h2>
+            <p class="text-justify text-gray-700 leading-relaxed">
+                The rapid advancement of text-to-image diffusion models has enabled the creation of highly photorealistic synthetic images that closely resemble real photographs, making it increasingly difficult to distinguish authentic content from AI-generated fabrications. This poses challenges for cybersecurity, digital forensics, and disaster response, where fake imagery of floods, fires, or earthquakes can spread misinformation or disrupt emergency operations. To address this, we introduce <strong>Forged Calamity</strong>, a benchmark dataset for synthetic disaster detection containing 30,000 images, including 6,000 real and 24,000 synthetic samples generated by four diffusion models. Comprehensive experiments across fine-tuned and zero-shot settings reveal consistent weaknesses in current forensic approaches. Fine-tuned detectors perform well in-distribution but lose up to 50% accuracy on unseen generators or disaster types, showing overfitting to model-specific artifacts. Zero-shot generalized detectors also struggle to maintain stable accuracy, with only limited resilience in a few representation-robust models. These findings highlight persistent generalization gaps and the urgent need for domain- and model-agnostic detection methods.
+            </p>
+        </div>
+
+        <div class="mb-16">
+            <h2 class="text-2xl font-bold text-gray-900 mb-4 border-b pb-2">Proposed Dataset</h2>
+            <p class="text-gray-700 mb-4">
+                The <strong>Forged Calamity</strong> dataset consists of 30,000 images across four disaster categories: Fire, Earthquake, Flood, and Thunderstorm. 
+            </p>
+            <ul class="list-disc list-inside text-gray-700 mb-6 pl-4">
+                <li><strong>Real Images:</strong> 6,000 images curated from Incident-1M and the internet.</li>
+                <li><strong>Synthetic Images:</strong> 24,000 images generated using four state-of-the-art diffusion models: Stable Diffusion 1.5, Stable Diffusion 2.0, SDXL, and PixArt.</li>
+                <li><strong>Diversity Filtering:</strong> To eliminate redundancy and ensure high visual diversity, we applied a similarity filtering mechanism proposed by Nguyen et al., removing highly similar generated samples.</li>
+            </ul>
+            
+            <div class="overflow-x-auto mb-8 shadow-sm rounded-lg">
+                <table class="min-w-full text-sm text-left text-gray-500 border border-gray-200">
+                    <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+                        <tr>
+                            <th scope="col" class="px-6 py-3 border-r">Disaster Category</th>
+                            <th scope="col" class="px-6 py-3 border-r text-center">Real Image</th>
+                            <th scope="col" class="px-6 py-3 text-center" colspan="4">Synthetic Image (Generators)</th>
+                        </tr>
+                        <tr class="bg-gray-100">
+                            <th class="border-r"></th>
+                            <th class="border-r"></th>
+                            <th class="px-4 py-2 text-center">SD 1.5</th>
+                            <th class="px-4 py-2 text-center">SD 2.0</th>
+                            <th class="px-4 py-2 text-center">SD XL</th>
+                            <th class="px-4 py-2 text-center">PixArt</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="bg-white border-b">
+                            <td class="px-6 py-4 font-medium text-gray-900 border-r">Fire</td>
+                            <td class="px-6 py-4 text-center border-r">1,500</td>
+                            <td class="px-6 py-4 text-center">1,500</td>
+                            <td class="px-6 py-4 text-center">1,500</td>
+                            <td class="px-6 py-4 text-center">1,500</td>
+                            <td class="px-6 py-4 text-center">1,500</td>
+                        </tr>
+                        <tr class="bg-gray-50 border-b">
+                            <td class="px-6 py-4 font-medium text-gray-900 border-r">Earthquake</td>
+                            <td class="px-6 py-4 text-center border-r">1,500</td>
+                            <td class="px-6 py-4 text-center">1,500</td>
+                            <td class="px-6 py-4 text-center">1,500</td>
+                            <td class="px-6 py-4 text-center">1,500</td>
+                            <td class="px-6 py-4 text-center">1,500</td>
+                        </tr>
+                        <tr class="bg-white border-b">
+                            <td class="px-6 py-4 font-medium text-gray-900 border-r">Flood</td>
+                            <td class="px-6 py-4 text-center border-r">1,500</td>
+                            <td class="px-6 py-4 text-center">1,500</td>
+                            <td class="px-6 py-4 text-center">1,500</td>
+                            <td class="px-6 py-4 text-center">1,500</td>
+                            <td class="px-6 py-4 text-center">1,500</td>
+                        </tr>
+                         <tr class="bg-gray-50 border-b">
+                            <td class="px-6 py-4 font-medium text-gray-900 border-r">Thunderstorm</td>
+                            <td class="px-6 py-4 text-center border-r">1,500</td>
+                            <td class="px-6 py-4 text-center">1,500</td>
+                            <td class="px-6 py-4 text-center">1,500</td>
+                            <td class="px-6 py-4 text-center">1,500</td>
+                            <td class="px-6 py-4 text-center">1,500</td>
+                        </tr>
+                        <tr class="bg-blue-50 font-bold text-gray-900">
+                            <td class="px-6 py-4 border-r">Total</td>
+                            <td class="px-6 py-4 text-center border-r">6,000</td>
+                            <td class="px-6 py-4 text-center" colspan="4">24,000</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <figure class="text-center mb-8">
+                <img src="images/disaster_gene_demo.jpg" alt="Generated Disaster Examples" class="teaser-img mb-2" onerror="this.onerror=null; this.src='https://via.placeholder.com/800x400?text=Generated+Disaster+Examples';">
+                <figcaption class="text-sm text-gray-500 italic">
+                    Figure 2: Examples of AI-generated images within the Forged Calamity dataset.
+                </figcaption>
+            </figure>
+        </div>
+
+        <div class="mb-16">
+            <h2 class="text-2xl font-bold text-gray-900 mb-4 border-b pb-2">Experiments & Methodology</h2>
+            <figure class="text-center mb-8">
+                <img src="images/pipeline_generate.jpg" alt="Generation Pipeline" class="teaser-img mb-2" onerror="this.onerror=null; this.src='https://via.placeholder.com/800x300?text=Pipeline';">
+                <figcaption class="text-sm text-gray-500 italic mt-2">
+                    Figure 3: Image generation pipeline: (1) Prompt Engineering (Moondream & Llama 3) and (2) Image Synthesis.
+                </figcaption>
+            </figure>
+
+            <p class="text-gray-700 mb-4">
+                We evaluated the generalization capacity of forensic models by training on a single domain (<strong>Earthquake</strong> generated by <strong>SD 1.5</strong>) and testing on unseen domains (Fire, Flood, Thunderstorm) and unseen generators (SD 2.0, SDXL, PixArt).
+            </p>
+
+            <p class="text-gray-700 font-semibold mb-2">Models Evaluated:</p>
+            <ul class="list-disc list-inside text-gray-700 space-y-1 pl-4 mb-6">
+                <li><strong>Standard Classifiers (Fine-tuned):</strong> ConvNeXt, Swin Transformer, ViT, SigLIPv2, DINOv2, ResNet152.</li>
+                <li><strong>Deepfake Detectors (Fine-tuned):</strong> RINE, UA, LGrad, DIRE, FreqNet, ADOF, CGL.</li>
+                <li><strong>Zero-shot Generalized Detectors:</strong> UniFD, DAE, SPAI, FatFormer, ADOF (Zero-shot), CGL (Zero-shot).</li>
+            </ul>
+        </div>
+
+        <div class="mb-16">
+            <h2 class="text-2xl font-bold text-gray-900 mb-4 border-b pb-2">Results</h2>
+            
+            <p class="text-gray-700 mb-6 text-justify">
+                We present the cross-generator accuracy of models trained on Earthquake (SD 1.5) and tested on unseen generators (PixArt, SD 2.0, SD XL). <span class="text-red-600 font-bold">Red</span> indicates the best result, <span class="text-blue-600 underline font-semibold">Blue</span> indicates the second best, and <span class="text-green-700 italic">Green</span> indicates the third best.
+            </p>
+
+            <!-- Table 1: Standard Classifiers -->
+            <h3 class="text-lg font-bold text-gray-800 mb-2">1. Standard Classifiers (Fine-tuned)</h3>
+            <div class="overflow-x-auto shadow-sm rounded-lg border border-gray-200 mb-8">
+                <table class="min-w-full text-xs sm:text-sm">
+                    <thead>
+                        <tr>
+                            <th class="table-header text-left">Method / Test Set</th>
+                            <th class="table-header">PixArt</th>
+                            <th class="table-header">SD 2.0</th>
+                            <th class="table-header">SD XL</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="table-cell text-left font-medium">ConvNeXt</td>
+                            <td class="table-cell">36.13</td>
+                            <td class="table-cell">21.08</td>
+                            <td class="table-cell">35.87</td>
+                        </tr>
+                        <tr>
+                            <td class="table-cell text-left font-medium">Swin</td>
+                            <td class="table-cell third-score">79.17</td>
+                            <td class="table-cell third-score">82.98</td>
+                            <td class="table-cell third-score">70.48</td>
+                        </tr>
+                        <tr>
+                            <td class="table-cell text-left font-medium">ViT</td>
+                            <td class="table-cell second-score">82.79</td>
+                            <td class="table-cell second-score">95.11</td>
+                            <td class="table-cell">64.57</td>
+                        </tr>
+                        <tr>
+                            <td class="table-cell text-left font-medium">SigLIPv2</td>
+                            <td class="table-cell">68.57</td>
+                            <td class="table-cell">76.19</td>
+                            <td class="table-cell second-score">84.19</td>
+                        </tr>
+                        <tr>
+                            <td class="table-cell text-left font-medium">DINOv2</td>
+                            <td class="table-cell best-score">89.02</td>
+                            <td class="table-cell best-score">97.46</td>
+                            <td class="table-cell best-score">88.00</td>
+                        </tr>
+                        <tr>
+                            <td class="table-cell text-left font-medium">ResNet152</td>
+                            <td class="table-cell">52.06</td>
+                            <td class="table-cell">79.17</td>
+                            <td class="table-cell">45.02</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Table 2: Deepfake Detectors -->
+            <h3 class="text-lg font-bold text-gray-800 mb-2">2. Deepfake Detectors (Fine-tuned)</h3>
+            <div class="overflow-x-auto shadow-sm rounded-lg border border-gray-200 mb-8">
+                <table class="min-w-full text-xs sm:text-sm">
+                    <thead>
+                        <tr>
+                            <th class="table-header text-left">Method / Test Set</th>
+                            <th class="table-header">PixArt</th>
+                            <th class="table-header">SD 2.0</th>
+                            <th class="table-header">SD XL</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="table-cell text-left font-medium">RINE</td>
+                            <td class="table-cell best-score">93.33</td>
+                            <td class="table-cell third-score">81.33</td>
+                            <td class="table-cell">83.70</td>
+                        </tr>
+                        <tr>
+                            <td class="table-cell text-left font-medium">UA</td>
+                            <td class="table-cell third-score">85.84</td>
+                            <td class="table-cell second-score">92.89</td>
+                            <td class="table-cell second-score">92.57</td>
+                        </tr>
+                        <tr>
+                            <td class="table-cell text-left font-medium">LGrad</td>
+                            <td class="table-cell">69.84</td>
+                            <td class="table-cell best-score">94.35</td>
+                            <td class="table-cell third-score">89.40</td>
+                        </tr>
+                        <tr>
+                            <td class="table-cell text-left font-medium">DIRE</td>
+                            <td class="table-cell">49.27</td>
+                            <td class="table-cell">64.89</td>
+                            <td class="table-cell">45.02</td>
+                        </tr>
+                        <tr>
+                            <td class="table-cell text-left font-medium">FreqNet</td>
+                            <td class="table-cell">1.59</td>
+                            <td class="table-cell">25.52</td>
+                            <td class="table-cell">16.63</td>
+                        </tr>
+                        <tr>
+                            <td class="table-cell text-left font-medium">ADOF</td>
+                            <td class="table-cell second-score">89.02</td>
+                            <td class="table-cell">67.05</td>
+                            <td class="table-cell best-score">92.76</td>
+                        </tr>
+                        <tr>
+                            <td class="table-cell text-left font-medium">CGL</td>
+                            <td class="table-cell">82.73</td>
+                            <td class="table-cell">11.05</td>
+                            <td class="table-cell">88.44</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Table 3: Zero-shot Detectors -->
+            <h3 class="text-lg font-bold text-gray-800 mb-2">3. Zero-shot Generalized Detectors</h3>
+            <p class="text-sm text-gray-600 mb-2">Tested on Earthquake images generated by various models (No fine-tuning).</p>
+            <div class="overflow-x-auto shadow-sm rounded-lg border border-gray-200 mb-8">
+                <table class="min-w-full text-xs sm:text-sm">
+                    <thead>
+                        <tr>
+                            <th class="table-header text-left">Method / Test Set</th>
+                            <th class="table-header">SD 1.5</th>
+                            <th class="table-header">PixArt</th>
+                            <th class="table-header">SD 2.0</th>
+                            <th class="table-header">SD XL</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="table-cell text-left font-medium">UniFD</td>
+                            <td class="table-cell">9.10</td>
+                            <td class="table-cell">2.10</td>
+                            <td class="table-cell">0.30</td>
+                            <td class="table-cell">4.00</td>
+                        </tr>
+                        <tr>
+                            <td class="table-cell text-left font-medium">DAE</td>
+                            <td class="table-cell">64.70</td>
+                            <td class="table-cell">67.75</td>
+                            <td class="table-cell best-score">100.00</td>
+                            <td class="table-cell">68.38</td>
+                        </tr>
+                        <tr>
+                            <td class="table-cell text-left font-medium">SPAI</td>
+                            <td class="table-cell best-score">100.00</td>
+                            <td class="table-cell third-score">70.98</td>
+                            <td class="table-cell third-score">92.06</td>
+                            <td class="table-cell second-score">98.86</td>
+                        </tr>
+                        <tr>
+                            <td class="table-cell text-left font-medium">FatFormer</td>
+                            <td class="table-cell">27.62</td>
+                            <td class="table-cell">5.97</td>
+                            <td class="table-cell">4.83</td>
+                            <td class="table-cell">23.81</td>
+                        </tr>
+                        <tr>
+                            <td class="table-cell text-left font-medium">ADOF (Zero-shot)</td>
+                            <td class="table-cell second-score">99.81</td>
+                            <td class="table-cell best-score">99.17</td>
+                            <td class="table-cell second-score">97.78</td>
+                            <td class="table-cell best-score">99.94</td>
+                        </tr>
+                        <tr>
+                            <td class="table-cell text-left font-medium">CGL (Zero-shot)</td>
+                            <td class="table-cell third-score">87.62</td>
+                            <td class="table-cell second-score">82.73</td>
+                            <td class="table-cell">11.05</td>
+                            <td class="table-cell third-score">88.44</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+             <div class="mt-8 mb-8">
+                <h3 class="text-lg font-bold text-gray-800 mb-4">Failure Cases</h3>
+                <figure class="text-center">
+                    <img src="images/failure_cases.png" alt="Failure Cases" class="teaser-img mb-2" onerror="this.onerror=null; this.src='https://via.placeholder.com/800x400?text=Failure+Cases';">
+                    <figcaption class="text-sm text-gray-500 italic">
+                        Figure 4: Failure cases of the SigLipv2 classifier on challenging samples.
+                    </figcaption>
+                </figure>
+                <p class="text-justify text-gray-700 leading-relaxed mt-4">
+                    As shown in Figure 4, models like SigLipv2 still exhibit certain limitations, mainly because they may not fully capture the distribution of images generated by diffusion models, nor accurately model the lighting composition and fine details that differ from real-world scenes. This likely results in misclassification when synthetic outputs closely resemble real photographs in terms of texture and overall realism. A similar tendency can be observed in other detectors, suggesting that these models may not possess a sufficiently holistic understanding of both global and local image information. They often fail to preserve coherent color composition and tend to overlook subtle local anomalies, such as irregular text or unnatural object details, which ultimately prevents them from reliably distinguishing fake images from real ones.
+                </p>
+            </div>
+        </div>
+
+        <div class="mb-16">
+            <h2 class="text-2xl font-bold text-gray-900 mb-4 border-b pb-2">Citation</h2>
+            <div class="bibtex-box">@Inproceedings{Phan-SOICT2025,
+  Title          = {Forged Calamity: Benchmark for Cross-Domain Synthetic Disaster Detection in the Age of Diffusion},
+  Author         = {Duc-Manh Phan and Quoc-Duy Tran and Duy-Khang Do and Anh-Tuan Vo and Hai-Dang Nguyen and Trong Le Do and Mai-Khiem Tran and Vinh-Tiep Nguyen and Tam V. Nguyen and Isao Echizen and Minh-Triet Tran and Trung-Nghia Le},
+  BookTitle      = {International Symposium on Information and Communication Technology},
+  Year           = {2025}, 
+}</div>
+        </div>
+
+        <div class="mb-16">
+            <h2 class="text-2xl font-bold text-gray-900 mb-4 border-b pb-2">Acknowledgements</h2>
+            <p class="text-gray-700 text-sm leading-relaxed mb-4">
+                This research is funded by Vietnam National University - Ho Chi Minh City (VNU-HCM) under Grant Number C2024-18-25. This research used the GPUs provided by the Intelligent Systems Lab at the Faculty of Information Technology, University of Science, VNU-HCM.
+            </p>
+            <p class="text-gray-700 text-sm leading-relaxed">
+                Prof. Isao Echizen is supported by JSPS KAKENHI Grant JP24H00732, by JST CREST Grants JPMJCR20D3 and JPMJCR2562 including AIP challenge program, and by JST K Program Grant JPMJKP24C2 Japan.
+            </p>
+        </div>
+
+        <footer class="text-center text-gray-500 text-sm mt-12 py-8 border-t">
+            <p>Project page for Forged Calamity.</p>
+        </footer>
+
     </div>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400&display=swap" rel="stylesheet">
+
 </body>
 </html>
