@@ -92,14 +92,12 @@
             </div>
         </div>
 
-        <div class="mb-12">
-            <figure class="text-center">
-                <img src="images/disaster_source_demo.jpg" alt="Real Disaster Examples" class="teaser-img mb-2" onerror="this.onerror=null; this.src='https://via.placeholder.com/800x400?text=Real+Disaster+Examples';">
-                <figcaption class="text-sm text-gray-500 italic">
-                    Figure 1: Representative examples of natural disaster categories from the Incident-1M dataset (Real images).
-                </figcaption>
-            </figure>
-        </div>
+        <figure class="text-center mb-8">
+            <img src="images/disaster_gene_demo.jpg" alt="Generated Disaster Examples" class="teaser-img mb-2" onerror="this.onerror=null; this.src='https://via.placeholder.com/800x400?text=Generated+Disaster+Examples';">
+            <figcaption class="text-sm text-gray-500 italic">
+                Examples of AI-generated images within the Forged Calamity dataset.
+            </figcaption>
+        </figure>        
 
         <div class="mb-16">
             <h2 class="text-2xl font-bold text-gray-900 mb-4 border-b pb-2">Abstract</h2>
@@ -110,6 +108,14 @@
 
         <div class="mb-16">
             <h2 class="text-2xl font-bold text-gray-900 mb-4 border-b pb-2">Proposed Dataset</h2>
+            <div class="mb-12">
+                <figure class="text-center">
+                    <img src="images/disaster_source_demo.jpg" alt="Real Disaster Examples" class="teaser-img mb-2" onerror="this.onerror=null; this.src='https://via.placeholder.com/800x400?text=Real+Disaster+Examples';">
+                    <figcaption class="text-sm text-gray-500 italic">
+                        Representative examples of natural disaster categories from the Incident-1M dataset (Real images).
+                    </figcaption>
+                </figure>
+            </div>            
             <p class="text-gray-700 mb-4">
                 The <strong>Forged Calamity</strong> dataset consists of 30,000 images across four disaster categories: Fire, Earthquake, Flood, and Thunderstorm. 
             </p>
@@ -177,13 +183,6 @@
                     </tbody>
                 </table>
             </div>
-
-            <figure class="text-center mb-8">
-                <img src="images/disaster_gene_demo.jpg" alt="Generated Disaster Examples" class="teaser-img mb-2" onerror="this.onerror=null; this.src='https://via.placeholder.com/800x400?text=Generated+Disaster+Examples';">
-                <figcaption class="text-sm text-gray-500 italic">
-                    Figure 2: Examples of AI-generated images within the Forged Calamity dataset.
-                </figcaption>
-            </figure>
         </div>
 
         <div class="mb-16">
@@ -191,7 +190,7 @@
             <figure class="text-center mb-8">
                 <img src="images/pipeline_generate.jpg" alt="Generation Pipeline" class="teaser-img mb-2" onerror="this.onerror=null; this.src='https://via.placeholder.com/800x300?text=Pipeline';">
                 <figcaption class="text-sm text-gray-500 italic mt-2">
-                    Figure 3: Image generation pipeline: (1) Prompt Engineering (Moondream & Llama 3) and (2) Image Synthesis.
+                    Image generation pipeline: (1) Prompt Engineering (Moondream & Llama 3) and (2) Image Synthesis.
                 </figcaption>
             </figure>
 
@@ -385,19 +384,6 @@
                         </tr>
                     </tbody>
                 </table>
-            </div>
-
-             <div class="mt-8 mb-8">
-                <h3 class="text-lg font-bold text-gray-800 mb-4">Failure Cases</h3>
-                <figure class="text-center">
-                    <img src="images/failure_cases.png" alt="Failure Cases" class="teaser-img mb-2" onerror="this.onerror=null; this.src='https://via.placeholder.com/800x400?text=Failure+Cases';">
-                    <figcaption class="text-sm text-gray-500 italic">
-                        Figure 4: Failure cases of the SigLipv2 classifier on challenging samples.
-                    </figcaption>
-                </figure>
-                <p class="text-justify text-gray-700 leading-relaxed mt-4">
-                    Models like SigLipv2 struggle with high-fidelity synthetic images, often failing to capture diffusion-specific distributions like lighting and fine textures. They tend to overlook subtle local anomalies (e.g., irregular text, unnatural details) and lack a holistic understanding of global consistency, leading to misclassifications.
-                </p>
             </div>
         </div>
 
